@@ -1,0 +1,228 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\repos\\SchoolDance\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BCEE29AE-21C7-48BB-84BF-8527949E05B0}|Infrastructure\\Infrastructure.csproj|f:\\repos\\schooldance\\infrastructure\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BCEE29AE-21C7-48BB-84BF-8527949E05B0}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BCEE29AE-21C7-48BB-84BF-8527949E05B0}|Infrastructure\\Infrastructure.csproj|f:\\repos\\schooldance\\infrastructure\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BCEE29AE-21C7-48BB-84BF-8527949E05B0}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|f:\\repos\\schooldance\\domain\\user\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|solutionrelative:domain\\user\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|f:\\repos\\schooldance\\domain\\user\\trainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|solutionrelative:domain\\user\\trainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|f:\\repos\\schooldance\\domain\\user\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|solutionrelative:domain\\user\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|f:\\repos\\schooldance\\domain\\dancetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|solutionrelative:domain\\dancetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|f:\\repos\\schooldance\\domain\\discount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|solutionrelative:domain\\discount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|f:\\repos\\schooldance\\domain\\shedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|solutionrelative:domain\\shedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|f:\\repos\\schooldance\\domain\\subscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|solutionrelative:domain\\subscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|f:\\repos\\schooldance\\domain\\tariff.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|solutionrelative:domain\\tariff.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|f:\\repos\\schooldance\\domain\\visit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06F876B2-508A-4AA3-A047-782A55C376C2}|Domain\\Domain.csproj|solutionrelative:domain\\visit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01909BDB-F04E-4EFB-8880-8DE076AAFE08}|SchoolDance\\SchoolDance.csproj|f:\\repos\\schooldance\\schooldance\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01909BDB-F04E-4EFB-8880-8DE076AAFE08}|SchoolDance\\SchoolDance.csproj|solutionrelative:schooldance\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\Infrastructure\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\ApplicationDbContext.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\Infrastructure\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Infrastructure\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T13:09:13.657Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\Infrastructure\\Class1.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Class1.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\Infrastructure\\Class1.cs",
+              "RelativeToolTip": "Infrastructure\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T13:08:16.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Visit.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\Domain\\Visit.cs",
+              "RelativeDocumentMoniker": "Domain\\Visit.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\Domain\\Visit.cs",
+              "RelativeToolTip": "Domain\\Visit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T12:43:34.955Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Subscription.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\Domain\\Subscription.cs",
+              "RelativeDocumentMoniker": "Domain\\Subscription.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\Domain\\Subscription.cs",
+              "RelativeToolTip": "Domain\\Subscription.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAgwBIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T12:41:29.206Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Discount.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\Domain\\Discount.cs",
+              "RelativeDocumentMoniker": "Domain\\Discount.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\Domain\\Discount.cs",
+              "RelativeToolTip": "Domain\\Discount.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T12:40:13.246Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Tariff.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\Domain\\Tariff.cs",
+              "RelativeDocumentMoniker": "Domain\\Tariff.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\Domain\\Tariff.cs",
+              "RelativeToolTip": "Domain\\Tariff.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T12:38:52.82Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Shedule.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\Domain\\Shedule.cs",
+              "RelativeDocumentMoniker": "Domain\\Shedule.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\Domain\\Shedule.cs",
+              "RelativeToolTip": "Domain\\Shedule.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAgwBIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T12:35:34.056Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Trainer.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\Domain\\User\\Trainer.cs",
+              "RelativeDocumentMoniker": "Domain\\User\\Trainer.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\Domain\\User\\Trainer.cs",
+              "RelativeToolTip": "Domain\\User\\Trainer.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAkwBMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T12:32:17.205Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Student.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\Domain\\User\\Student.cs",
+              "RelativeDocumentMoniker": "Domain\\User\\Student.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\Domain\\User\\Student.cs",
+              "RelativeToolTip": "Domain\\User\\Student.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAkwBIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T12:30:27.955Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DanceType.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\Domain\\DanceType.cs",
+              "RelativeDocumentMoniker": "Domain\\DanceType.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\Domain\\DanceType.cs",
+              "RelativeToolTip": "Domain\\DanceType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-08T18:55:02.172Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "User.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\Domain\\User\\User.cs",
+              "RelativeDocumentMoniker": "Domain\\User\\User.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\Domain\\User\\User.cs",
+              "RelativeToolTip": "Domain\\User\\User.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAkwBcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T20:51:20.265Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Program.cs",
+              "DocumentMoniker": "F:\\repos\\SchoolDance\\SchoolDance\\Program.cs",
+              "RelativeDocumentMoniker": "SchoolDance\\Program.cs",
+              "ToolTip": "F:\\repos\\SchoolDance\\SchoolDance\\Program.cs",
+              "RelativeToolTip": "SchoolDance\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T20:50:20.353Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
