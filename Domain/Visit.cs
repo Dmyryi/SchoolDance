@@ -10,7 +10,9 @@ namespace Domain
     {
         public Guid VisitId {  get; set; }
         public Guid SubId { get; set; }
-        public Guid ScheduleId {  get; set; }
+        public Subscription Subscription { get; set; } = null!;
+        public Guid SheduleId {  get; set; }
+        public Shedule Shedule { get; set; } = null!;
         public DateTime ActualDate {  get; set; }  
     }
 }

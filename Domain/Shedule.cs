@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.User;
 
 namespace Domain
 {
@@ -10,9 +11,12 @@ namespace Domain
     {
         public Guid SheduleId {  get; set; }
         public Guid DanceId { get; set; }
+        public DanceType DanceType { get; set; } = null!;
         public Guid TrainerId { get; set; }
-        public string DayOfWeek {  get; set; }  
+        public Trainer Trainer { get; set; } = null!;
+        public string DayOfWeek { get; set; } = string.Empty;
         public TimeOnly StartTime { get; set; }
-        public string Room {  get; set; }
+        public string Room { get; set; } = string.Empty;
+        public List<Visit> Visits { get; set; } = new();
     }
 }

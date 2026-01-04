@@ -10,9 +10,9 @@ namespace Domain.User
     {
         public Guid StudentId { get; set; }
         public Guid UserId { get; set; }
-        public string Name { get; set; }
-        public string Phone {  get; set; }
-        public string Email { get; set; }
-
+        public User? User { get; set; }
+     
+        public List<Subscription> Subscriptions { get; set; } = new();
+        
     }
 }

@@ -9,9 +9,10 @@ namespace Domain
     public class Discount
     {
         public Guid DiscountId {  get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int Percent {  get; set; }
 
+        public List<Subscription> Subscriptions { get; set; } = new();
 
     }
 }

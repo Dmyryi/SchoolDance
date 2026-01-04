@@ -10,10 +10,11 @@ namespace Domain.User
     {
         public Guid TrainerId {  get; set; }
         public Guid UserId {  get; set; }
-        public string Name {  get; set; }
-        public string Phone { get; set; }
-        public string Specialization {  get; set; }
-
+        public User? User { get; set; }
+      
+        public string Specialization { get; set; } = string.Empty;
+        public List<Shedule> Shedules { get; set; } = new();
+        
         
     }
 }

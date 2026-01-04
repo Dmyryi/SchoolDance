@@ -10,8 +10,11 @@ namespace Domain
     {
 
         public Guid TariffId {  get; set; }
-        public string Name {  get; set; }
+        public string Name { get; set; } = string.Empty;
         public decimal Price {  get; set; }
         public int DaysValid {  get; set; }
+
+        public List<Subscription> Subscriptions { get; set; } = new();
+
     }
 }
