@@ -15,6 +15,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<AuthorizationRepository>();
 builder.Services.AddScoped<ProfileRepository>();
+builder.Services.AddScoped<SchoolRepository>();
 
 
 builder.Services.AddScoped<IJwtService, JwtService>();
@@ -24,7 +25,7 @@ builder.Services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
-
+builder.Services.AddLogging();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -54,9 +55,20 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
 
 var app = builder.Build();
-
+app.UseCors("AllowReactApp");
 if (app.Environment.IsDevelopment())
 {
 
