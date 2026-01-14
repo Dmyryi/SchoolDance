@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>84a3a630-0579-4b2c-8d04-86710715dccd</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,7 @@
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.11.10" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
     <PackageReference Include="ServiceStack.Client" Version="10.0.4" />
   </ItemGroup>
 

@@ -7,6 +7,7 @@ using Application.Interfaces;
 using Application.DTOs;
 using Domain.User;
 using Microsoft.EntityFrameworkCore;
+using Domain;
 
 namespace Infrastructure.Repositories
 {
@@ -45,12 +46,15 @@ namespace Infrastructure.Repositories
                 UserId = user.UserId 
             };
 
+
+
             _dbContext.Users.Add(user);
             _dbContext.Students.Add(student); 
 
             await _dbContext.SaveChangesAsync(ct);
 
-            
+            await EnsureUserHasSubscription(user.UserId, ct);
+
             var (access, accessExp) = jwt.CreateAccessToken(user.UserId, user.Email);
             var (refresh, refreshExp) = await rts.IssueAsync(user.UserId, ct);
 
@@ -82,6 +86,40 @@ namespace Infrastructure.Repositories
       new TokensDto(access, accessExp, refresh, refreshExp)
   );
             return resp;
+        }
+
+
+
+        public async Task EnsureUserHasSubscription(Guid userId, CancellationToken ct)
+        {
+            // 1. Сначала находим запись студента для этого пользователя
+            var student = await _dbContext.Students
+                .FirstOrDefaultAsync(s => s.UserId == userId, ct);
+
+            if (student == null)
+            {
+                throw new InvalidOperationException("STUDENT_RECORD_NOT_FOUND");
+            }
+
+            // 2. Проверяем наличие подписки именно по StudentId
+            var sub = await _dbContext.Subscriptions
+                .FirstOrDefaultAsync(s => s.StudentId == student.StudentId, ct);
+
+            if (sub == null)
+            {
+                var defaultSub = new Subscription
+                {
+                    SubId = Guid.NewGuid(),
+                    StudentId = student.StudentId, // ИСПОЛЬЗУЕМ ID СТУДЕНТА, А НЕ ЮЗЕРА!
+                    TariffId = Guid.Parse("f47ac10b-58cc-4372-a567-0e02b2c3d471"),
+                    Status = "Active",
+                    StartDate = DateTime.UtcNow,
+                    EndDate = DateTime.UtcNow.AddDays(7)
+                };
+
+                _dbContext.Subscriptions.Add(defaultSub);
+                await _dbContext.SaveChangesAsync(ct);
+            }
         }
 
     }

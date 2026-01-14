@@ -17,6 +17,8 @@ namespace Domain.User
         public string Phone { get; set; } = string.Empty;
         public TypeUser Role { get; set; } = TypeUser.User;
 
+        public string UserImg { get; set; } = string.Empty;
+
         // Навигационные свойства
         public Student? Student { get; set; }
         public Trainer? Trainer { get; set; }

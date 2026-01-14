@@ -8,4 +8,7 @@ using Domain.User;
 namespace Application.DTOs
 {
     public record ProfileDto( string Email, string Name, string Phone, User.TypeUser Role);
+
+    public record BookingRequest(Guid SheduleId, DateTime ActualDate);
+    public record RescheduleRequest(Guid VisitId, Guid NewSheduleId, DateTime NewDate);
 }

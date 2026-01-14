@@ -22,4 +22,12 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="F:\repos\SchoolDance\Infrastructure\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="F:\repos\SchoolDance\Infrastructure\.editorconfig" />
+  </ItemGroup>
+
 </Project>
