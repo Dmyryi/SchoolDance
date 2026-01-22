@@ -20,16 +20,19 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<List<SheduleDto>> GetSheduleAsync(Guid TrainerId, CancellationToken ct)
+        public async Task<List<SheduleDto>> GetSheduleAsync(Guid trainerId, CancellationToken ct)
         {
+            Console.WriteLine($"Запит розкладу для тренера: {trainerId}");
             return await _dbContext.Shedules
-    .Select(s => new SheduleDto(
-        s.SheduleId,
-        s.DayOfWeek,
-        s.StartTime,
-        s.Room
-    ))
-    .ToListAsync(ct);
+                .Where(s => s.TrainerId == trainerId) // Важливо: повертаємо розклад саме цього тренера
+                .Select(s => new SheduleDto(
+                    s.SheduleId,
+                    s.DayOfWeek,
+                    s.StartTime,
+                    s.Room,
+                    s.Status // Тепер статус летить на фронт!
+                ))
+                .ToListAsync(ct);
         }
 
 
@@ -64,11 +67,15 @@ namespace Infrastructure.Repositories
         {
             return await _dbContext.Trainers
                 .AsNoTracking()
-                .Where(t=>t.Specialization == specDance)
-                .Select(s=>new TrainerDto(
-                    s.TrainerId,
-                    s.Specialization
-                    ))
+                .Where(t => t.Specialization == specDance)
+                .Select(t => new TrainerDto
+                (
+                    t.TrainerId,
+                    t.Specialization,
+                    // Витягуємо дані безпосередньо через навігаційну властивість User
+                    t.User != null ? t.User.Name : "Невідомо",
+                    t.User != null ? t.User.UserImg : "default.jpg"
+                ))
                 .ToListAsync(ct);
         }
     }
