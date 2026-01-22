@@ -6,7 +6,7 @@ public record RegisterRequest(string Email, string Password, string Name, string
 
 public record LoginRequest(string Email, string Password);
 
-public record UserDto(Guid Id, string Email);
+public record UserAuthDto(Guid Id, string Email);
 
 public record TokensDto(
     string AccessToken,
@@ -14,9 +14,9 @@ public record TokensDto(
     string RefreshToken,
     DateTimeOffset RefreshExpiresAt);
 
-public record LoginResponse(UserDto User, TokensDto Tokens);
+public record LoginResponse(UserAuthDto User, TokensDto Tokens);
 
-public record RegisterResponse(UserDto User, TokensDto Tokens);
+public record RegisterResponse(UserAuthDto User, TokensDto Tokens);
 
 public record RefreshRequest(string RefreshToken);
 
