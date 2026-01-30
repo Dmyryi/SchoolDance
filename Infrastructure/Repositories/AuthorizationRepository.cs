@@ -90,6 +90,10 @@ namespace Infrastructure.Repositories
 
 
 
+public async Task LogoutAsync(string refreshToken, IRefreshTokenService rts, CancellationToken ct)
+{
+    await rts.RevokeAsync(refreshToken, ct);
+}
         public async Task EnsureUserHasSubscription(Guid userId, CancellationToken ct)
         {
             // 1. Сначала находим запись студента для этого пользователя
