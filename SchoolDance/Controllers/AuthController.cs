@@ -2,7 +2,7 @@
 using Application.Interfaces;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Authorization;
 namespace SchoolDance.Controllers
 {
 
@@ -71,6 +71,19 @@ namespace SchoolDance.Controllers
                 return Unauthorized(new { message = "INVALID_CREDENTIALS" });
             }
         }
+
+        [HttpPost("logout")]
+    [Authorize] 
+    public async Task<IActionResult> Logout([FromBody] LogoutRequest req, CancellationToken ct)
+    {
+        if (string.IsNullOrEmpty(req.RefreshToken))
+        {
+            return BadRequest("Token is required");
+        }
+        await _authRepository.LogoutAsync(req.RefreshToken, _refreshTokenService, ct);
+
+        return Ok(new { message = "Logged out successfully" });
+    }
 
     }
 }

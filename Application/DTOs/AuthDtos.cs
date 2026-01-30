@@ -25,3 +25,5 @@ public record RefreshResponse(
     DateTimeOffset AccessExpiresAt,
     string RefreshToken,
     DateTimeOffset RefreshExpiresAt);
+
+public record LogoutRequest(string RefreshToken);
