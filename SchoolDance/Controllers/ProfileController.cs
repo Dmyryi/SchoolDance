@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using Domain.User;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -20,26 +20,38 @@ namespace SchoolDance.Controllers
         }
 
         [HttpGet("me")]
-        public async Task<ActionResult<ProfileDto>> GetMyProfile(CancellationToken ct)
+        public async Task<ActionResult<ProfileMeDto>> GetMyProfile(CancellationToken ct)
         {
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userIdClaim)) return Unauthorized();
 
             var userId = Guid.Parse(userIdClaim);
+            var profile = await _profileRepo.GetProfileMe(userId, ct);
+            if (profile == null) return NotFound();
 
-            
-            var user = await _profileRepo.Get(userId, ct);
+            return Ok(profile);
+        }
 
-            if (user == null) return NotFound();
+        [HttpGet("me/subscriptions")]
+        public async Task<ActionResult<IReadOnlyList<SubscriptionDto>>> GetMySubscriptions(CancellationToken ct)
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim)) return Unauthorized();
 
-            var response = new ProfileDto(
-                user.Email,
-                user.Name,
-                user.Phone,
-                user.Role
-            );
+            var userId = Guid.Parse(userIdClaim);
+            var list = await _profileRepo.GetMySubscriptions(userId, ct);
+            return Ok(list);
+        }
 
-            return Ok(response);
+        [HttpGet("me/schedules")]
+        public async Task<ActionResult<IReadOnlyList<ScheduleDto>>> GetMySchedules(CancellationToken ct)
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim)) return Unauthorized();
+
+            var userId = Guid.Parse(userIdClaim);
+            var list = await _profileRepo.GetMySchedules(userId, ct);
+            return Ok(list);
         }
 
         [HttpPatch("redact")]

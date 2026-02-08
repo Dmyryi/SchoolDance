@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +20,138 @@ namespace Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
-       
+
+        public async Task<ProfileMeDto?> GetProfileMe(Guid userId, CancellationToken ct)
+        {
+            var user = await _dbContext.Users
+                .AsNoTracking()
+                .Include(u => u.Student)
+                    .ThenInclude(s => s!.Subscriptions)
+                .Include(u => u.Trainer)
+                    .ThenInclude(t => t!.Shedules)
+                .FirstOrDefaultAsync(x => x.UserId == userId, ct);
+
+            if (user == null) return null;
+
+            StudentSummary? studentPart = null;
+            if (user.Student != null)
+            {
+                var activeCount = user.Student.Subscriptions.Count(s => s.Status == "Active");
+                studentPart = new StudentSummary(activeCount);
+            }
+
+            TrainerSummary? trainerPart = null;
+            if (user.Trainer != null)
+                trainerPart = new TrainerSummary(user.Trainer.TrainerId, user.Trainer.Specialization, user.Trainer.Shedules.Count);
+
+            return new ProfileMeDto(
+                user.Email,
+                user.Name,
+                user.Phone,
+                user.Role,
+                user.UserImg ?? "",
+                studentPart,
+                trainerPart
+            );
+        }
+
+        public async Task<IReadOnlyList<SubscriptionDto>> GetMySubscriptions(Guid userId, CancellationToken ct)
+        {
+            var user = await _dbContext.Users
+                .AsNoTracking()
+                .Include(u => u.Student)
+                    .ThenInclude(s => s!.Subscriptions)
+                    .ThenInclude(sub => sub.Tariff)
+                .Include(u => u.Student)
+                    .ThenInclude(s => s!.Subscriptions)
+                    .ThenInclude(sub => sub.Discount)
+                .Include(u => u.Student)
+                    .ThenInclude(s => s!.Subscriptions)
+                    .ThenInclude(sub => sub.Visits)
+                    .ThenInclude(v => v.Shedule)
+                    .ThenInclude(sh => sh.DanceType)
+                .Include(u => u.Student)
+                    .ThenInclude(s => s!.Subscriptions)
+                    .ThenInclude(sub => sub.Visits)
+                    .ThenInclude(v => v.Shedule)
+                    .ThenInclude(sh => sh.Trainer)
+                    .ThenInclude(tr => tr!.User)
+                .FirstOrDefaultAsync(x => x.UserId == userId, ct);
+
+            if (user?.Student == null) return Array.Empty<SubscriptionDto>();
+
+            return user.Student.Subscriptions.Select(sub => new SubscriptionDto(
+                sub.SubId,
+                sub.StartDate,
+                sub.EndDate,
+                sub.Status,
+                new TariffDto(sub.Tariff.TariffId, sub.Tariff.Name, sub.Tariff.Price, sub.Tariff.DaysValid),
+                sub.Discount == null ? null : new DiscountDto(sub.Discount.DiscountId, sub.Discount.Name, sub.Discount.Percent),
+                sub.Visits.Select(v => new VisitDto(v.VisitId, v.ActualDate, MapSchedule(v.Shedule, null))).ToList()
+            )).ToList();
+        }
+
+        public async Task<IReadOnlyList<ScheduleDto>> GetMySchedules(Guid userId, CancellationToken ct)
+        {
+            var user = await _dbContext.Users
+                .AsNoTracking()
+                .Include(u => u.Student)
+                    .ThenInclude(s => s!.Subscriptions)
+                    .ThenInclude(sub => sub.Visits)
+                    .ThenInclude(v => v.Shedule)
+                    .ThenInclude(sh => sh.DanceType)
+                .Include(u => u.Student)
+                    .ThenInclude(s => s!.Subscriptions)
+                    .ThenInclude(sub => sub.Visits)
+                    .ThenInclude(v => v.Shedule)
+                    .ThenInclude(sh => sh.Trainer)
+                    .ThenInclude(tr => tr!.User)
+                .Include(u => u.Trainer)
+                    .ThenInclude(t => t!.Shedules)
+                    .ThenInclude(sh => sh.DanceType)
+                .FirstOrDefaultAsync(x => x.UserId == userId, ct);
+
+            if (user == null) return Array.Empty<ScheduleDto>();
+
+            var schedules = new List<ScheduleDto>();
+            if (user.Student != null)
+            {
+                var fromVisits = user.Student.Subscriptions
+                    .SelectMany(s => s.Visits)
+                    .Select(v => v.Shedule)
+                    .DistinctBy(sh => sh.SheduleId)
+                    .ToList();
+                foreach (var sh in fromVisits)
+                    schedules.Add(MapSchedule(sh, null));
+            }
+            if (user.Trainer != null)
+            {
+                foreach (var sh in user.Trainer.Shedules)
+                {
+                    if (schedules.Any(s => s.SheduleId == sh.SheduleId)) continue;
+                    schedules.Add(MapSchedule(sh, user.Trainer, user.Name));
+                }
+            }
+            return schedules;
+        }
+
+        private static ScheduleDto MapSchedule(Shedule sh, Trainer? knownTrainer, string? knownTrainerName = null)
+        {
+            var trainerId = knownTrainer?.TrainerId ?? sh.Trainer?.TrainerId ?? Guid.Empty;
+            var trainerName = knownTrainerName ?? knownTrainer?.User?.Name ?? sh.Trainer?.User?.Name ?? "";
+            return new ScheduleDto(
+                sh.SheduleId,
+                sh.DayOfWeek,
+                sh.StartTime,
+                sh.Room,
+                sh.Status,
+                sh.DanceType?.Name ?? "",
+                sh.DanceType?.DanceId ?? Guid.Empty,
+                trainerName,
+                trainerId
+            );
+        }
+
         public async Task<User?> Get(Guid userId, CancellationToken ct)
         {
             return await _dbContext.Users
@@ -40,10 +171,8 @@ namespace Infrastructure.Repositories
             return res;
         }
 
-        public async Task CreateVisitAsync(Guid userId, Guid sheduleId,DateTime actDate, CancellationToken ct)
+        public async Task CreateVisitAsync(Guid userId, Guid sheduleId, DateTime actDate, CancellationToken ct)
         {
-            // 1. Находим студента и его активную подписку
-            // Мы используем .Include, чтобы сразу подтянуть подписку одним запросом
             var subscription = await _dbContext.Subscriptions.Include(s => s.Student)
                 .FirstOrDefaultAsync(s => s.Student.UserId == userId && s.Status == "Active", ct);
 
@@ -71,20 +200,14 @@ namespace Infrastructure.Repositories
 
         public async Task RescheduleVisitAsync(Guid visitId, Guid newSheduleId, DateTime newDate, CancellationToken ct)
         {
-            
             var visit = await _dbContext.Visits
                 .FirstOrDefaultAsync(v => v.VisitId == visitId, ct);
 
             if (visit == null)
-            {
                 throw new InvalidOperationException("VISIT_NOT_FOUND");
-            }
 
-            
             visit.SheduleId = newSheduleId;
             visit.ActualDate = newDate;
-
-            
             await _dbContext.SaveChangesAsync(ct);
         }
     }

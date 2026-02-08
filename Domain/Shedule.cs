@@ -16,6 +16,7 @@ namespace Domain
         public Trainer Trainer { get; set; } = null!;
         public string DayOfWeek { get; set; } = string.Empty;
         public TimeOnly StartTime { get; set; }
+        public int Status { get; set; }
         public string Room { get; set; } = string.Empty;
         public List<Visit> Visits { get; set; } = new();
     }
