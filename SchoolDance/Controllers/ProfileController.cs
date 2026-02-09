@@ -97,15 +97,22 @@ namespace SchoolDance.Controllers
         [HttpPut("reschedule")]
         public async Task<IActionResult> Reschedule([FromBody] RescheduleRequest req, CancellationToken ct)
         {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim)) return Unauthorized();
+
+            var userId = Guid.Parse(userIdClaim);
             try
             {
-                await _profileRepo.RescheduleVisitAsync(req.VisitId, req.NewSheduleId, req.NewDate, ct);
-
+                await _profileRepo.RescheduleVisitAsync(userId, req.VisitId, req.NewSheduleId, req.NewDate, ct);
                 return Ok(new { message = "Занятие перенесено" });
             }
             catch (InvalidOperationException ex)
             {
-                return NotFound(new { error = ex.Message });
+                if (ex.Message == "VISIT_NOT_FOUND" || ex.Message == "VISIT_NOT_OWNED")
+                    return NotFound(new { error = ex.Message });
+                if (ex.Message == "SCHEDULE_NOT_FOUND")
+                    return BadRequest(new { error = ex.Message });
+                throw;
             }
         }
     }

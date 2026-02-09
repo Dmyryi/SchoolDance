@@ -201,13 +201,22 @@ namespace Infrastructure.Repositories
             await _dbContext.SaveChangesAsync(ct);
         }
 
-        public async Task RescheduleVisitAsync(Guid visitId, Guid newSheduleId, DateTime newDate, CancellationToken ct)
+        public async Task RescheduleVisitAsync(Guid userId, Guid visitId, Guid newSheduleId, DateTime newDate, CancellationToken ct)
         {
             var visit = await _dbContext.Visits
+                .Include(v => v.Subscription)
+                    .ThenInclude(s => s.Student)
                 .FirstOrDefaultAsync(v => v.VisitId == visitId, ct);
 
             if (visit == null)
                 throw new InvalidOperationException("VISIT_NOT_FOUND");
+
+            if (visit.Subscription.Student.UserId != userId)
+                throw new InvalidOperationException("VISIT_NOT_OWNED");
+
+            var sheduleExists = await _dbContext.Shedules.AnyAsync(s => s.SheduleId == newSheduleId, ct);
+            if (!sheduleExists)
+                throw new InvalidOperationException("SCHEDULE_NOT_FOUND");
 
             visit.SheduleId = newSheduleId;
             visit.ActualDate = newDate;
