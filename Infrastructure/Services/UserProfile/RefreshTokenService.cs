@@ -72,5 +72,21 @@ namespace Infrastructure.Services.UserProfile
             var hash = SHA256.HashData(bytes);
             return Convert.ToHexString(hash);
         }
+
+        public async Task RevokeAsync(string incomingRaw, CancellationToken ct)
+{
+
+    var incomingHash = Sha256Hex(incomingRaw);
+
+    var token = await db.RefreshTokens
+        .FirstOrDefaultAsync(x => x.TokenHash == incomingHash && x.RevokedAt == null, ct);
+
+    if (token != null)
+    {
+
+        token.RevokedAt = DateTime.UtcNow;
+        await db.SaveChangesAsync(ct);
+    }
+}
     }
 }

@@ -59,7 +59,7 @@ namespace Infrastructure.Repositories
             var (refresh, refreshExp) = await rts.IssueAsync(user.UserId, ct);
 
             return new RegisterResponse(
-                new UserDto(user.UserId, user.Email),
+                new UserAuthDto(user.UserId, user.Email),
                 new TokensDto(access, accessExp, refresh, refreshExp)
             );
         }
@@ -82,7 +82,7 @@ namespace Infrastructure.Repositories
 
 
             var resp = new LoginResponse(
-      new UserDto(user.UserId, user.Email),
+      new UserAuthDto(user.UserId, user.Email),
       new TokensDto(access, accessExp, refresh, refreshExp)
   );
             return resp;
@@ -90,6 +90,10 @@ namespace Infrastructure.Repositories
 
 
 
+public async Task LogoutAsync(string refreshToken, IRefreshTokenService rts, CancellationToken ct)
+{
+    await rts.RevokeAsync(refreshToken, ct);
+}
         public async Task EnsureUserHasSubscription(Guid userId, CancellationToken ct)
         {
             // 1. Сначала находим запись студента для этого пользователя

@@ -67,26 +67,21 @@ namespace SchoolDance.Controllers
 
             if (updateUser == null) return NotFound("User not found");
 
-            
             var response = new ProfileDto(
                 updateUser.Email,
                 updateUser.Name,
                 updateUser.Phone,
                 updateUser.Role
             );
-
-
             return Ok(response);
         }
 
         [HttpPost("book")]
-       
         public async Task<IActionResult> BookClass([FromBody] BookingRequest req, CancellationToken ct)
         {
             try
             {
-                
-                var userId = Guid.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value);
+                var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
                 await _profileRepo.CreateVisitAsync(userId, req.SheduleId, req.ActualDate, ct);
 
@@ -100,18 +95,24 @@ namespace SchoolDance.Controllers
 
 
         [HttpPut("reschedule")]
-        
         public async Task<IActionResult> Reschedule([FromBody] RescheduleRequest req, CancellationToken ct)
         {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim)) return Unauthorized();
+
+            var userId = Guid.Parse(userIdClaim);
             try
             {
-                await _profileRepo.RescheduleVisitAsync(req.VisitId, req.NewSheduleId, req.NewDate, ct);
-
+                await _profileRepo.RescheduleVisitAsync(userId, req.VisitId, req.NewSheduleId, req.NewDate, ct);
                 return Ok(new { message = "Занятие перенесено" });
             }
             catch (InvalidOperationException ex)
             {
-                return NotFound(new { error = ex.Message });
+                if (ex.Message == "VISIT_NOT_FOUND" || ex.Message == "VISIT_NOT_OWNED")
+                    return NotFound(new { error = ex.Message });
+                if (ex.Message == "SCHEDULE_NOT_FOUND")
+                    return BadRequest(new { error = ex.Message });
+                throw;
             }
         }
     }

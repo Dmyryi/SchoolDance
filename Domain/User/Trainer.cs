@@ -13,6 +13,7 @@ namespace Domain.User
         public User? User { get; set; }
         
         public string Specialization { get; set; } = string.Empty;
+     
         public List<Shedule> Shedules { get; set; } = new();
         
         
