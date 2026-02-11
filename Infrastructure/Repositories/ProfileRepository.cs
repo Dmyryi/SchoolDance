@@ -21,7 +21,6 @@ namespace Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-
         public async Task<ProfileMeDto?> GetProfileMe(Guid userId, CancellationToken ct)
         {
             var user = await _dbContext.Users
@@ -88,7 +87,9 @@ namespace Infrastructure.Repositories
                 sub.Status,
                 new TariffDto(sub.Tariff.TariffId, sub.Tariff.Name, sub.Tariff.Price, sub.Tariff.DaysValid),
                 sub.Discount == null ? null : new DiscountDto(sub.Discount.DiscountId, sub.Discount.Name, sub.Discount.Percent),
-                sub.Visits.Select(v => new VisitDto(v.VisitId, v.ActualDate, MapSchedule(v.Shedule))).ToList()
+
+                sub.Visits.Select(v => new VisitDto(v.VisitId, v.ActualDate, MapSchedule(v.Shedule, null))).ToList()
+
             )).ToList();
         }
 
@@ -110,10 +111,7 @@ namespace Infrastructure.Repositories
                 .Include(u => u.Trainer)
                     .ThenInclude(t => t!.Shedules)
                     .ThenInclude(sh => sh.DanceType)
-                .Include(u => u.Trainer)
-                    .ThenInclude(t => t!.Shedules)
-                    .ThenInclude(sh => sh.Trainer)
-                    .ThenInclude(tr => tr!.User)
+
                 .FirstOrDefaultAsync(x => x.UserId == userId, ct);
 
             if (user == null) return Array.Empty<ScheduleDto>();
@@ -127,21 +125,29 @@ namespace Infrastructure.Repositories
                     .DistinctBy(sh => sh.SheduleId)
                     .ToList();
                 foreach (var sh in fromVisits)
-                    schedules.Add(MapSchedule(sh));
+
+                    schedules.Add(MapSchedule(sh, null));
+
             }
             if (user.Trainer != null)
             {
                 foreach (var sh in user.Trainer.Shedules)
                 {
                     if (schedules.Any(s => s.SheduleId == sh.SheduleId)) continue;
-                    schedules.Add(MapSchedule(sh));
+
+                    schedules.Add(MapSchedule(sh, user.Trainer, user.Name));
+
                 }
             }
             return schedules;
         }
 
-        private static ScheduleDto MapSchedule(Shedule sh)
+
+        private static ScheduleDto MapSchedule(Shedule sh, Trainer? knownTrainer, string? knownTrainerName = null)
         {
+            var trainerId = knownTrainer?.TrainerId ?? sh.Trainer?.TrainerId ?? Guid.Empty;
+            var trainerName = knownTrainerName ?? knownTrainer?.User?.Name ?? sh.Trainer?.User?.Name ?? "";
+
             return new ScheduleDto(
                 sh.SheduleId,
                 sh.DayOfWeek,
@@ -150,8 +156,10 @@ namespace Infrastructure.Repositories
                 sh.Status,
                 sh.DanceType?.Name ?? "",
                 sh.DanceType?.DanceId ?? Guid.Empty,
-                sh.Trainer?.User?.Name ?? "",
-                sh.Trainer?.TrainerId ?? Guid.Empty
+
+                trainerName,
+                trainerId
+
             );
         }
 
@@ -211,12 +219,6 @@ namespace Infrastructure.Repositories
             if (visit == null)
                 throw new InvalidOperationException("VISIT_NOT_FOUND");
 
-            if (visit.Subscription.Student.UserId != userId)
-                throw new InvalidOperationException("VISIT_NOT_OWNED");
-
-            var sheduleExists = await _dbContext.Shedules.AnyAsync(s => s.SheduleId == newSheduleId, ct);
-            if (!sheduleExists)
-                throw new InvalidOperationException("SCHEDULE_NOT_FOUND");
 
             visit.SheduleId = newSheduleId;
             visit.ActualDate = newDate;
