@@ -17,8 +17,6 @@ namespace Domain
         public string DayOfWeek { get; set; } = string.Empty;
         public TimeOnly StartTime { get; set; }
 
-        public int Status { get; set; }
-
         public string Room { get; set; } = string.Empty;
         public int Status { get; set; } = 1;
         public List<Visit> Visits { get; set; } = new();
