@@ -1,5 +1,7 @@
 # Custom: Ignore local settings with secrets (avoid committing passwords to GitHub)
 appsettings.Development.json
+**/appsettings.Development.json
+SchoolDance/appsettings.Development.json
 appsettings.Local.json
 
 ## Ignore Visual Studio temporary files, build results, and
