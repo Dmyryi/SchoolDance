@@ -93,10 +93,10 @@ namespace Infrastructure.Repositories
             )).ToList();
         }
 
-        public async Task<IReadOnlyList<ScheduleDto>> GetMySchedules(Guid userId, CancellationToken ct)
+        public async Task<IReadOnlyList<MyScheduleItemDto>> GetMySchedules(Guid userId, CancellationToken ct)
         {
             var user = await _dbContext.Users
-                .AsNoTracking()
+                .AsTracking()
                 .Include(u => u.Student)
                     .ThenInclude(s => s!.Subscriptions)
                     .ThenInclude(sub => sub.Visits)
@@ -111,43 +111,55 @@ namespace Infrastructure.Repositories
                 .Include(u => u.Trainer)
                     .ThenInclude(t => t!.Shedules)
                     .ThenInclude(sh => sh.DanceType)
-
                 .FirstOrDefaultAsync(x => x.UserId == userId, ct);
 
-            if (user == null) return Array.Empty<ScheduleDto>();
+            if (user == null) return Array.Empty<MyScheduleItemDto>();
 
-            var schedules = new List<ScheduleDto>();
+            var items = new List<MyScheduleItemDto>();
             if (user.Student != null)
             {
-                var fromVisits = user.Student.Subscriptions
-                    .SelectMany(s => s.Visits)
-                    .Select(v => v.Shedule)
-                    .DistinctBy(sh => sh.SheduleId)
-                    .ToList();
-                foreach (var sh in fromVisits)
-
-                    schedules.Add(MapSchedule(sh, null));
-
+                foreach (var visit in user.Student.Subscriptions.SelectMany(s => s.Visits))
+                {
+                    var sh = visit.Shedule;
+                    items.Add(new MyScheduleItemDto(
+                        visit.VisitId,
+                        sh.SheduleId,
+                        sh.DayOfWeek,
+                        sh.StartTime,
+                        sh.Room,
+                        sh.Status,
+                        sh.DanceType?.Name ?? "",
+                        sh.DanceType?.DanceId ?? Guid.Empty,
+                        sh.Trainer?.User?.Name ?? "",
+                        sh.Trainer?.TrainerId ?? Guid.Empty
+                    ));
+                }
             }
             if (user.Trainer != null)
             {
+                var trainerName = user.Trainer.User?.Name ?? user.Name ?? "";
                 foreach (var sh in user.Trainer.Shedules)
                 {
-                    if (schedules.Any(s => s.SheduleId == sh.SheduleId)) continue;
-
-                    schedules.Add(MapSchedule(sh, user.Trainer, user.Name));
-
+                    items.Add(new MyScheduleItemDto(
+                        null,
+                        sh.SheduleId,
+                        sh.DayOfWeek,
+                        sh.StartTime,
+                        sh.Room,
+                        sh.Status,
+                        sh.DanceType?.Name ?? "",
+                        sh.DanceType?.DanceId ?? Guid.Empty,
+                        trainerName,
+                        user.Trainer.TrainerId
+                    ));
                 }
             }
-            return schedules;
+            return items;
         }
 
-
-        private static ScheduleDto MapSchedule(Shedule sh, Trainer? knownTrainer, string? knownTrainerName = null)
+        private static ScheduleDto MapSchedule(Shedule sh, Trainer? trainerForSchedule = null)
         {
-            var trainerId = knownTrainer?.TrainerId ?? sh.Trainer?.TrainerId ?? Guid.Empty;
-            var trainerName = knownTrainerName ?? knownTrainer?.User?.Name ?? sh.Trainer?.User?.Name ?? "";
-
+            var trainer = trainerForSchedule ?? sh.Trainer;
             return new ScheduleDto(
                 sh.SheduleId,
                 sh.DayOfWeek,
@@ -156,10 +168,8 @@ namespace Infrastructure.Repositories
                 sh.Status,
                 sh.DanceType?.Name ?? "",
                 sh.DanceType?.DanceId ?? Guid.Empty,
-
-                trainerName,
-                trainerId
-
+                trainer?.User?.Name ?? "",
+                trainer?.TrainerId ?? Guid.Empty
             );
         }
 

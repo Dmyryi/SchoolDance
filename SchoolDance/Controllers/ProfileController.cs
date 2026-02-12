@@ -44,7 +44,7 @@ namespace SchoolDance.Controllers
         }
 
         [HttpGet("me/schedules")]
-        public async Task<ActionResult<IReadOnlyList<ScheduleDto>>> GetMySchedules(CancellationToken ct)
+        public async Task<ActionResult<IReadOnlyList<MyScheduleItemDto>>> GetMySchedules(CancellationToken ct)
         {
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userIdClaim)) return Unauthorized();

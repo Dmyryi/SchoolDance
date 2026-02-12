@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,13 +24,14 @@ namespace Infrastructure.Repositories
         {
             Console.WriteLine($"Запит розкладу для тренера: {trainerId}");
             return await _dbContext.Shedules
-                .Where(s => s.TrainerId == trainerId) // Важливо: повертаємо розклад саме цього тренера
+                .Where(s => s.TrainerId == trainerId) 
                 .Select(s => new SheduleDto(
                     s.SheduleId,
+                    s.DanceId,
                     s.DayOfWeek,
                     s.StartTime,
                     s.Room,
-                    s.Status // Тепер статус летить на фронт!
+                    s.Status
                 ))
                 .ToListAsync(ct);
         }
@@ -72,7 +73,7 @@ namespace Infrastructure.Repositories
                 (
                     t.TrainerId,
                     t.Specialization,
-                    // Витягуємо дані безпосередньо через навігаційну властивість User
+                  
                     t.User != null ? t.User.Name : "Невідомо",
                     t.User != null ? t.User.UserImg : "default.jpg"
                 ))
