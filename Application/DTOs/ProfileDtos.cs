@@ -47,6 +47,20 @@ namespace Application.DTOs
         Guid TrainerId
     );
 
+
+    public record MyScheduleItemDto(
+        Guid? VisitId,
+        Guid SheduleId,
+        string DayOfWeek,
+        TimeOnly StartTime,
+        string Room,
+        int Status,
+        string DanceTypeName,
+        Guid DanceTypeId,
+        string TrainerName,
+        Guid TrainerId
+    );
+
     public record TariffDto(Guid TariffId, string Name, decimal Price, int DaysValid);
 
     public record DiscountDto(Guid DiscountId, string Name, int Percent);
