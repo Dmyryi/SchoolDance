@@ -21,7 +21,6 @@ namespace Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-
         public async Task<ProfileMeDto?> GetProfileMe(Guid userId, CancellationToken ct)
         {
             var user = await _dbContext.Users
@@ -88,7 +87,9 @@ namespace Infrastructure.Repositories
                 sub.Status,
                 new TariffDto(sub.Tariff.TariffId, sub.Tariff.Name, sub.Tariff.Price, sub.Tariff.DaysValid),
                 sub.Discount == null ? null : new DiscountDto(sub.Discount.DiscountId, sub.Discount.Name, sub.Discount.Percent),
-                sub.Visits.Select(v => new VisitDto(v.VisitId, v.ActualDate, MapSchedule(v.Shedule))).ToList()
+
+                sub.Visits.Select(v => new VisitDto(v.VisitId, v.ActualDate, MapSchedule(v.Shedule, null))).ToList()
+
             )).ToList();
         }
 
@@ -228,12 +229,6 @@ namespace Infrastructure.Repositories
             if (visit == null)
                 throw new InvalidOperationException("VISIT_NOT_FOUND");
 
-            if (visit.Subscription.Student.UserId != userId)
-                throw new InvalidOperationException("VISIT_NOT_OWNED");
-
-            var sheduleExists = await _dbContext.Shedules.AnyAsync(s => s.SheduleId == newSheduleId, ct);
-            if (!sheduleExists)
-                throw new InvalidOperationException("SCHEDULE_NOT_FOUND");
 
             visit.SheduleId = newSheduleId;
             visit.ActualDate = newDate;
