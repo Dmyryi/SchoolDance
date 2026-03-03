@@ -1,0 +1,79 @@
+services:
+  school_mysql:
+    image: mysql:8.0
+    container_name: school_mysql
+
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: schooldancedb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: school_postgres
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: dance_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: school_dance_chat
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: school_rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  schooldance.main:
+    build:
+      context: .
+      dockerfile: SchoolDance/Dockerfile
+    container_name: schooldance_main_api
+    ports:
+      - "5000:8080"
+    depends_on:
+      - chat.redis
+      - school_mysql
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - Jwt__Key=${JWT_KEY}
+      - Jwt__Issuer=SchoolDanceAPI
+      - Jwt__Audience=SchoolDanceClient
+      - ConnectionStrings__DefaultConnection=Server=school_mysql;Port=3306;Database=schooldancedb;Uid=root;Pwd=${MYSQL_ROOT_PASSWORD};
+      - RabbitMQ__Host=rabbitmq
+
+  schooldance.chat:
+    build:
+      context: .
+      dockerfile: SchoolDance.Chat/Dockerfile
+    container_name: schooldance_chat_api
+    ports:
+      - "5279:8080"
+    depends_on:
+      - chat.redis
+      - postgres
+      - rabbitmq
+    environment:
+      - ConnectionStrings__Redis=chat.redis:6379
+      - ConnectionStrings__ChatPostgres=Host=postgres;Port=5432;Database=school_dance_chat;Username=dance_user;Password=${POSTGRES_PASSWORD};
+      - RabbitMQ__Host=rabbitmq
+
+  chat.redis:
+    image: redis:alpine
+    container_name: realtimechat_redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
+  mysql_data:
