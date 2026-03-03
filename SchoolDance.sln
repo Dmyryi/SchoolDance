@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35828.75
@@ -10,6 +10,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{BCEE29AE-21C7-48BB-84BF-8527949E05B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{A1C58A1E-87F4-4EAC-8203-7EA3575986DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolDance.Chat", "SchoolDance.Chat\SchoolDance.Chat.csproj", "{3EE05CB8-E232-40AA-895C-87529FE2D31A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolDance.Chat.Domain", "SchoolDance.Chat.Domain\SchoolDance.Chat.Domain.csproj", "{A2D68B1E-88F5-4EBD-8304-8EA4585996EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolDance.Chat.Application", "SchoolDance.Chat.Application\SchoolDance.Chat.Application.csproj", "{B3E79C2F-99A6-4FCE-9415-9FB5696007FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolDance.Chat.Infrastructure", "SchoolDance.Chat.Infrastructure\SchoolDance.Chat.Infrastructure.csproj", "{C4F80D30-00A7-40DF-A526-0AC6707118AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +41,22 @@ Global
 		{A1C58A1E-87F4-4EAC-8203-7EA3575986DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1C58A1E-87F4-4EAC-8203-7EA3575986DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1C58A1E-87F4-4EAC-8203-7EA3575986DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EE05CB8-E232-40AA-895C-87529FE2D31A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EE05CB8-E232-40AA-895C-87529FE2D31A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EE05CB8-E232-40AA-895C-87529FE2D31A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EE05CB8-E232-40AA-895C-87529FE2D31A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2D68B1E-88F5-4EBD-8304-8EA4585996EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2D68B1E-88F5-4EBD-8304-8EA4585996EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2D68B1E-88F5-4EBD-8304-8EA4585996EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2D68B1E-88F5-4EBD-8304-8EA4585996EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3E79C2F-99A6-4FCE-9415-9FB5696007FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3E79C2F-99A6-4FCE-9415-9FB5696007FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3E79C2F-99A6-4FCE-9415-9FB5696007FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3E79C2F-99A6-4FCE-9415-9FB5696007FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4F80D30-00A7-40DF-A526-0AC6707118AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4F80D30-00A7-40DF-A526-0AC6707118AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4F80D30-00A7-40DF-A526-0AC6707118AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4F80D30-00A7-40DF-A526-0AC6707118AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
